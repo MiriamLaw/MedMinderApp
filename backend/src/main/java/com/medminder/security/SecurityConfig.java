@@ -18,6 +18,9 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -30,6 +33,7 @@ public class SecurityConfig {
             .formLogin(form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
+                .usernameParameter("email")
                 .defaultSuccessUrl("/", true)
                 .permitAll()
             )
@@ -50,11 +54,8 @@ public class SecurityConfig {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .userDetailsService(userDetailsService)
-            .passwordEncoder(passwordEncoder());
+            .passwordEncoder(passwordEncoder);
     }
     
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 }

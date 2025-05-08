@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@RestController // This annotation is used to create a RESTful web service
 @RequestMapping("/api/auth")
 public class AuthController {
     
-    @Autowired
+    @Autowired  
     private UserService userService;
     
     @PostMapping("/register")
