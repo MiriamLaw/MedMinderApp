@@ -107,3 +107,43 @@ For production deployment, you only need to deploy the backend application. The 
 - Day-by-day medication management
 - Medication alarms
 - Admin dashboard for user management
+
+AI Usage Section
+
+```markdown
+## 🤖 AI Code Assistant Usage
+
+This project includes guidance for using an AI code assistant (like Cursor or ChatGPT with Cursor integration).
+
+### 🔐 Boundaries & Guardrails
+- The assistant **may scan the entire codebase** for context.
+- It must **avoid making unrequested or destructive changes**.
+- Changes should **respect existing environments (dev vs prod)**.
+- **.env files must never be altered** unless explicitly instructed.
+- It should **not run or restart backends/frontends**, and **must not deploy or push to Git**.
+
+### 📦 After Making Front-End Edits
+- Run:
+
+```bash
+npm run build
+```
+
+This ensures no unused code or issues remain from generated output.
+
+### 🧹 Code Quality Expectations
+- Code should be simple, DRY (don’t repeat yourself), and fully functional.
+- Avoid files over 300 lines; suggest or implement refactoring as needed.
+- Avoid introducing new tools, patterns, or frameworks unless necessary — and clean up old logic if you do.
+
+### 🚫 Don’t...
+- Add mock data to dev/prod environments (use test files only).
+- Introduce placeholders or TODOs.
+
+### 🧠 Assistant Roles
+This project is full-stack. The assistant may be asked to:
+- Write backend Java / Spring Boot code
+- Help with Thymeleaf templates or controllers
+- Generate or debug JavaScript / React logic
+- Assist with full-stack integration (e.g. auth, REST, security config)
+```

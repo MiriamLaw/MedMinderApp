@@ -3,6 +3,7 @@ description:
 globs: 
 alwaysApply: false
 ---
+MedMinder: Backend & Frontend environment safety guardrails
 ## IMPORTANT:
 - You have the permission to scan the entire codebase.
 - Work in a non-destructive way.

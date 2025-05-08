@@ -1,0 +1,32 @@
+## .cursor-config (add this to your project root)
+
+```json
+{
+  "defaultRules": [
+    "medminder-safety"
+  ],
+  "rules": {
+    "medminder-safety": {
+      "description": "MedMinder: Backend & Frontend environment safety guardrails",
+      "autoAttach": true,
+      "scope": "project",
+      "content": """
+- You have the permission to scan the entire codebase.
+- Work in a non-destructive way.
+- Always prefer simple solutions.
+- Avoid duplication of code whenever possible — check for similar existing logic before writing new.
+- Be mindful of different environments: dev and prod.
+- Make only requested or clearly relevant changes.
+- If replacing a pattern or tech, fully remove the old one after confirming the new works.
+- Keep the codebase clean, well-organized, and concise.
+- Refactor any file that exceeds 300 lines.
+- Mock data only in unit tests — never in dev/prod logic.
+- Never add stubbing, fake logic, or placeholder values in environments that affect users.
+- Never overwrite .env files unless explicitly instructed.
+- Do not start or restart frontend/backend servers in the terminal without approval.
+- Do not push code to Git or deploy without confirmation.
+- If you update the frontend, run `npm run build` to check for unused code or issues.
+      """
+    }
+  }
+}
