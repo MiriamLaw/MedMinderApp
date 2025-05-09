@@ -1,7 +1,7 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 MedMinder: Backend & Frontend environment safety guardrails
 ## IMPORTANT:

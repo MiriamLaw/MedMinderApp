@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class AlarmController {
         List<Map<String, Object>> alarms = alarmService.getAlarmsForMedication(medicationId).stream()
             .map(alarm -> {
                 Map<String, Object> map = new HashMap<>();
-                map.put("id", alarm.getId());
+       I          map.put("id", alarm.getId());
                 map.put("time", alarm.getTime());
                 map.put("status", alarm.getStatus());
                 return map;
