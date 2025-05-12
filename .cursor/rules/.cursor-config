@@ -1,6 +1,3 @@
-## .cursor-config (add this to your project root)
-
-```json
 {
   "defaultRules": ["medminder-safety"],
   "reuse": [
@@ -15,5 +12,5 @@
       "scope": "project",
       "content": "- Never overwrite .env files unless explicitly instructed.\n- Do not start/restart backend or frontend unless explicitly instructed.\n- Never push code or deploy without confirmation.\n- Only mock data in unit tests — never in dev or prod logic.\n- After frontend updates, always run `npm run build` to detect unused code.\n- Avoid file bloat — refactor files over 300 lines.\n- Don’t modify key files (`pom.xml`, `application.properties`, `settings.json`, etc.) without request.\n- Work cleanly: remove unused imports, dead code, and broken references.\n- Prefer simple, clean solutions. Avoid clever hacks."
     }
-  ]
+  }
 }

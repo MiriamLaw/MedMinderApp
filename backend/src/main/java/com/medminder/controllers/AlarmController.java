@@ -24,9 +24,9 @@ public class AlarmController {
     @GetMapping("/medication/{medicationId}")
     public ResponseEntity<?> getAlarmsForMedication(@PathVariable Long medicationId) {
         List<Map<String, Object>> alarms = alarmService.getAlarmsForMedication(medicationId).stream()
-            .map(alarm -> {
+            .map((Alarm alarm) -> {
                 Map<String, Object> map = new HashMap<>();
-       I          map.put("id", alarm.getId());
+                map.put("id", alarm.getId());
                 map.put("time", alarm.getTime());
                 map.put("status", alarm.getStatus());
                 return map;
