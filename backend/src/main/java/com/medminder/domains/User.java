@@ -23,6 +23,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Week> weeks = new ArrayList<>();
     
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive = true;
+    
     // Constructors
     public User() {}
     
@@ -70,5 +73,13 @@ public class User {
     
     public void setWeeks(List<Week> weeks) {
         this.weeks = weeks;
+    }
+    
+    public boolean isActive() {
+        return isActive;
+    }
+    
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

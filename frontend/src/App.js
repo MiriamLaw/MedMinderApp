@@ -5,6 +5,7 @@ import Register from "./pages/Register"
 import Dashboard from "./pages/Dashboard"
 import DayView from "./pages/DayView"
 import AdminDashboard from "./pages/AdminDashboard"
+import Welcome from "./pages/Welcome"
 import { AuthProvider, useAuth } from "./context/AuthContext"
 
 // Protected route component
@@ -44,8 +45,9 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Welcome />} />
           <Route
-            path="/"
+            path="/dashboard"
             element={
               <ProtectedRoute>
                 <Dashboard />
@@ -68,6 +70,7 @@ function App() {
               </AdminRoute>
             }
           />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
     </AuthProvider>
