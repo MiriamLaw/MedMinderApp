@@ -12,6 +12,7 @@ function Register() {
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
+    console.log("React handleSubmit called");
     e.preventDefault()
 
     if (password !== confirmPassword) {
