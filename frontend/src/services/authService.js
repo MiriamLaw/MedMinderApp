@@ -18,13 +18,13 @@ export const register = async (email, password) => {
 }
 
 export const getCurrentUser = async () => {
-  const response = await fetch("/api/auth/user")
-
-  if (!response.ok) {
-    throw new Error("Not authenticated")
+  const response = await fetch('/api/auth/me', {
+    credentials: 'include',
+  });
+  if (response.ok) {
+    return await response.json();
   }
-
-  return await response.json()
+  throw new Error('Not authenticated');
 }
 
 export const login = async (email, password) => {
