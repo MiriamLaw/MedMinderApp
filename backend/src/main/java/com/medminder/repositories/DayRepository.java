@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface DayRepository extends JpaRepository<Day, Long> {
     List<Day> findByWeekOrderByDayOfWeek(Week week);
+    Day findByWeekAndDayOfWeek(Week week, String dayOfWeek);
 }

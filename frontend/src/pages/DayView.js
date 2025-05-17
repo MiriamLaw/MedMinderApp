@@ -61,6 +61,24 @@ function DayView() {
     setMedications(medications.map((med) => (med.id === id ? { ...med, taken: !med.taken } : med)))
   }
 
+  const handleSaveMeds = async () => {
+    const medsToSave = medications.filter((med) => med.timeSlot === activeTab);
+    try {
+      const response = await fetch(`/api/medications/${day}/${activeTab}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(medsToSave),
+      });
+      if (!response.ok) throw new Error("Failed to save medications");
+      alert("Medications saved!");
+    } catch (err) {
+      alert("Error saving medications: " + err.message);
+    }
+  };
+
   if (loading) {
     return <div className="flex justify-center items-center h-screen">Loading...</div>
   }
@@ -71,7 +89,7 @@ function DayView() {
 
       <main className="container mx-auto px-4 py-6">
         <div className="flex items-center mb-6">
-          <button onClick={() => navigate("/")} className="text-gray-600 hover:text-gray-900">
+          <button onClick={() => navigate("/dashboard")} className="text-gray-600 hover:text-gray-900">
             &larr; Back
           </button>
           <h2 className={`text-2xl font-bold flex-1 text-center ${dayColors[day]}`}>{day}</h2>
@@ -164,6 +182,13 @@ function DayView() {
               className="w-full py-2 bg-red-500 hover:bg-red-600 text-white rounded-md mt-4"
             >
               + Add Medication
+            </button>
+            <button
+              onClick={handleSaveMeds}
+              className="w-full py-2 bg-green-600 hover:bg-green-700 text-white rounded-md mt-2"
+              aria-label="Save meds"
+            >
+              Save meds
             </button>
           </div>
         </div>
