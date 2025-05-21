@@ -45,13 +45,17 @@ public class MedicationService {
         Day day = dayRepository.findById(dayId)
                 .orElseThrow(() -> new RuntimeException("Day not found"));
         
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Medication name cannot be null or empty");
+        }
+        
         MedicationEntry medication = new MedicationEntry();
         medication.setDay(day);
         medication.setName(name);
-        medication.setDosage(dosage);
-        medication.setQuantity(quantity);
-        medication.setFrequency(frequency);
-        medication.setTimeSlot(timeSlot);
+        medication.setDosage(dosage != null ? dosage : "");
+        medication.setQuantity(quantity != null ? quantity : 1);
+        medication.setFrequency(frequency != null ? frequency : "");
+        medication.setTimeSlot(timeSlot != null ? timeSlot : "");
         medication.setTaken(false);
         
         return medicationEntryRepository.save(medication);
@@ -89,6 +93,7 @@ public class MedicationService {
             .orElseThrow(() -> new RuntimeException("User not found"));
         // Find or create the current week (using today as the start date for simplicity)
         LocalDate startOfWeek = LocalDate.now().with(java.time.DayOfWeek.SUNDAY);
+        int weekNumber = startOfWeek.get(java.time.temporal.IsoFields.WEEK_OF_WEEK_BASED_YEAR);
         Week week = weekRepository.findByUserOrderByStartDateDesc(user).stream()
             .filter(w -> w.getStartDate().equals(startOfWeek))
             .findFirst()
@@ -96,6 +101,7 @@ public class MedicationService {
                 Week newWeek = new Week();
                 newWeek.setUser(user);
                 newWeek.setStartDate(startOfWeek);
+                newWeek.setWeekNumber(weekNumber);
                 return weekRepository.save(newWeek);
             });
         // Find or create the Day

@@ -22,12 +22,19 @@ public class Week {
     @OneToMany(mappedBy = "week", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Day> days = new ArrayList<>();
     
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive = true;
+    
+    @Column(name = "week_number", nullable = false)
+    private Integer weekNumber;
+    
     // Constructors
     public Week() {}
     
-    public Week(User user, LocalDate startDate) {
+    public Week(User user, LocalDate startDate, Integer weekNumber) {
         this.user = user;
         this.startDate = startDate;
+        this.weekNumber = weekNumber;
     }
     
     // Getters and Setters
@@ -61,6 +68,22 @@ public class Week {
     
     public void setDays(List<Day> days) {
         this.days = days;
+    }
+    
+    public boolean isActive() {
+        return isActive;
+    }
+    
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+    
+    public Integer getWeekNumber() {
+        return weekNumber;
+    }
+    
+    public void setWeekNumber(Integer weekNumber) {
+        this.weekNumber = weekNumber;
     }
     
     // Helper method to add a day

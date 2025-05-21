@@ -1,7 +1,6 @@
 package com.medminder.controllers;
 
 import com.medminder.services.MedicationService;
-import com.medminder.domains.MedicationEntry;
 import com.medminder.domains.Day;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
