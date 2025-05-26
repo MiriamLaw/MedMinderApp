@@ -128,6 +128,7 @@ function DayView() {
                       onChange={(e) => handleUpdateMedication(medication.id, "name", e.target.value)}
                       placeholder="Medication name"
                       className="ml-3 flex-1 p-2 border rounded-md"
+                      required
                     />
                     <button
                       onClick={() => handleDeleteMedication(medication.id)}

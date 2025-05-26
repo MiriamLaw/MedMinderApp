@@ -8,6 +8,8 @@ import com.medminder.repositories.DayRepository;
 import com.medminder.repositories.MedicationEntryRepository;
 import com.medminder.repositories.UserRepository;
 import com.medminder.repositories.WeekRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import java.util.Optional;
 
 @Service
 public class MedicationService {
+    
+    private static final Logger logger = LoggerFactory.getLogger(MedicationService.class);
     
     @Autowired
     private MedicationEntryRepository medicationEntryRepository;
@@ -42,23 +46,30 @@ public class MedicationService {
     
     public MedicationEntry createMedication(Long dayId, String name, String dosage, Integer quantity, 
                                            String frequency, String timeSlot) {
-        Day day = dayRepository.findById(dayId)
-                .orElseThrow(() -> new RuntimeException("Day not found"));
-        
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Medication name cannot be null or empty");
+        logger.info("Creating medication with dayId: {}, name: {}, dosage: {}, quantity: {}, frequency: {}, timeSlot: {}", 
+                    dayId, name, dosage, quantity, frequency, timeSlot);
+        try {
+            Day day = dayRepository.findById(dayId)
+                    .orElseThrow(() -> new RuntimeException("Day not found"));
+            
+            if (name == null || name.isEmpty()) {
+                throw new IllegalArgumentException("Medication name cannot be null or empty");
+            }
+            
+            MedicationEntry medication = new MedicationEntry();
+            medication.setDay(day);
+            medication.setName(name);
+            medication.setDosage(dosage != null ? dosage : "");
+            medication.setQuantity(quantity != null ? quantity : 1);
+            medication.setFrequency(frequency != null ? frequency : "");
+            medication.setTimeSlot(timeSlot != null ? timeSlot : "");
+            medication.setTaken(false);
+            
+            return medicationEntryRepository.save(medication);
+        } catch (Exception e) {
+            logger.error("Error creating medication: {}", e.getMessage(), e);
+            throw e;
         }
-        
-        MedicationEntry medication = new MedicationEntry();
-        medication.setDay(day);
-        medication.setName(name);
-        medication.setDosage(dosage != null ? dosage : "");
-        medication.setQuantity(quantity != null ? quantity : 1);
-        medication.setFrequency(frequency != null ? frequency : "");
-        medication.setTimeSlot(timeSlot != null ? timeSlot : "");
-        medication.setTaken(false);
-        
-        return medicationEntryRepository.save(medication);
     }
     
     public MedicationEntry updateMedication(Long id, String name, String dosage, Integer quantity, 

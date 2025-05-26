@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping("/api/medications")
+@RequestMapping("/medications")
 public class MedicationController {
     
     @Autowired
