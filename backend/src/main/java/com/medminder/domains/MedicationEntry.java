@@ -15,7 +15,7 @@ public class MedicationEntry {
     @JoinColumn(name = "day_id", nullable = false)
     private Day day;
     
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String name;
     
     private String dosage;
