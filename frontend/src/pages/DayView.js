@@ -63,6 +63,14 @@ function DayView() {
 
   const handleSaveMeds = async () => {
     const medsToSave = medications.filter((med) => med.timeSlot === activeTab);
+
+    // Check for empty medication names
+    const hasEmptyName = medsToSave.some((med) => med.name.trim() === "");
+    if (hasEmptyName) {
+      alert("Please provide a name for all medications before saving.");
+      return;
+    }
+
     try {
       const response = await fetch(`/api/medications/${day}/${activeTab}`, {
         method: "POST",
