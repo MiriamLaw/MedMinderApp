@@ -24,16 +24,35 @@ function DayView() {
     Sat: "bg-pink-500 text-pink-500",
   }
 
+  // Example mapping of day names to IDs
+  const dayNameToIdMap = {
+    "Sun": 1,
+    "Mon": 2,
+    "Tue": 3,
+    "Wed": 4,
+    "Thu": 5,
+    "Fri": 6,
+    "Sat": 7
+  };
+
+  // Define fetchMedications outside of useEffect
+  const fetchMedications = async () => {
+    try {
+      const dayId = dayNameToIdMap[day];
+      const response = await fetch(`/medications/day/${dayId}`);
+      if (!response.ok) throw new Error("Failed to fetch medications");
+      const data = await response.json();
+      setMedications(data);
+      setLoading(false);
+    } catch (err) {
+      console.error("Error fetching medications:", err);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    // In a real app, this would fetch medications for the selected day
-    // For now, we'll use mock data
-    setMedications([
-      { id: 1, name: "Aspirin", dosage: "100mg", quantity: 1, frequency: "1x/day", timeSlot: "MORN", taken: false },
-      { id: 2, name: "Vitamin D", dosage: "1000 IU", quantity: 1, frequency: "1x/day", timeSlot: "MORN", taken: true },
-      { id: 3, name: "Lisinopril", dosage: "10mg", quantity: 1, frequency: "1x/day", timeSlot: "NOON", taken: false },
-    ])
-    setLoading(false)
-  }, [day])
+    fetchMedications();
+  }, [day]);
 
   const handleAddMedication = () => {
     const newMedication = {
@@ -64,7 +83,6 @@ function DayView() {
   const handleSaveMeds = async () => {
     const medsToSave = medications.filter((med) => med.timeSlot === activeTab);
 
-    // Check for empty medication names
     const hasEmptyName = medsToSave.some((med) => med.name.trim() === "");
     if (hasEmptyName) {
       alert("Please provide a name for all medications before saving.");
@@ -82,6 +100,11 @@ function DayView() {
       });
       if (!response.ok) throw new Error("Failed to save medications");
       alert("Medications saved!");
+
+      const responseData = await response.json();
+      console.log("API Response:", responseData); // Log API response
+
+      fetchMedications(); // Refetch medications to update the state
     } catch (err) {
       alert("Error saving medications: " + err.message);
     }
