@@ -42,6 +42,7 @@ function DayView() {
       const response = await fetch(`/medications/day/${dayId}`);
       if (!response.ok) throw new Error("Failed to fetch medications");
       const data = await response.json();
+      console.log("Fetched Medications:", data); // Log fetched medications
       setMedications(data);
       setLoading(false);
     } catch (err) {
